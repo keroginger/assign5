@@ -10,7 +10,6 @@ final int GAME_WIN     = 2;
 final int GAME_LOSE    = 3;
 
 int status;     //Game Status
-int point;      //Game Score
 int brickNum;   //Breaking brick number
 int pLife=3;
 
@@ -22,7 +21,7 @@ void setup(){
    ball= new Ball(mouseX,height-18);
    board = new Bar(100);
    bricks = new Brick[50];
-    reset();
+   reset();
    
  //    for(int i=0;i<bricks.length;i++){
  //      bricks[i]= new Brick(105,40);
@@ -33,15 +32,19 @@ void draw(){
    background(0);
    switch(status) {
 
-      case GAME_START:
-        
+        case GAME_START:
+        noStroke();
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textSize(23);
+        text("Press Enter or Click Right ", width/2, height/2+20);
         ball.display();
         board.display();
         board.move();
         ball = new Ball(mouseX,height-18);
         for (int i=0; i<bricks.length; i++){
         bricks[i].display();
-        pongLife(3);
+        drawLife();
        }
       break;
       case GAME_PLAYING:
@@ -50,28 +53,36 @@ void draw(){
        ball.display();
        board.move();
        drawBrick();
-       pongLife(3);
+       drawLife();
        ballDrop();
        board.display();
        shotBrick();
-       /*for (int i=0; i<bricks.length; i++){
-         bricks[i].display();
-       }*/
-       //brick.display(100);
+       checkWin();
+      
       break;
       case GAME_WIN:
+         background(255);
+         noStroke();
+         fill(230, 74, 96);
+         textAlign(CENTER, CENTER);
+         textSize(48);
+         text("YOU WIN!!!!", width/2, height/2);
       break;
       case GAME_LOSE:
-       background(255);
-       
+         background(255);
+         noStroke();
+         fill(230, 74, 96);
+         textAlign(CENTER, CENTER);
+         textSize(48);
+         text("PLAY AGAIN!!!", width/2, height/2);
       break;
   
    }
 } 
-void pongLife(int life) {
+void drawLife() {
     fill(230, 74, 96);
     textSize(16);
-    text("LIFE :", 36, 455); 
+    text("LIFE :", 36, 448); 
     int lifeX=88;
     int lifeY=448;
     int lifeGap=25;
@@ -114,6 +125,12 @@ void ballDrop(){
    }
 }
 
+void checkWin(){
+   if(brickNum==bricks.length){
+      status = GAME_WIN;
+   }
+}
+
 void shotBrick(){
  for (int i=0; i<bricks.length; i++) {
     Brick brick = bricks[i];
@@ -139,8 +156,8 @@ void reset() {
     bricks[i] = null;
   }
   brickMaker(105,40,41,10);
-  point = 0;
-
+  pLife=3;
+  brickNum=0;
 }
 void mouseClicked(){
      if(mouseButton==RIGHT){
@@ -148,4 +165,22 @@ void mouseClicked(){
      }
 }
 
-
+void keyPressed(){
+    if(key == ENTER){
+        switch(status) {  
+           case GAME_START:
+           status = GAME_PLAYING;
+           break;
+           
+           case GAME_WIN:
+           status = GAME_START;
+           reset();
+           break;
+           
+           case GAME_LOSE:
+           status = GAME_START;
+           reset();
+           break;
+       } 
+     }
+}
