@@ -8,7 +8,9 @@ class Ball{
   void move(){
     x+=xSpeed;
     y+=ySpeed;
-    
+    float angle = random(0, PI);
+    xSpeed = 5*cos(angle);
+    ySpeed = -5*sin(angle);
     if (x<size/2 || x>width-size/2){
       xSpeed *= -1;
     }
