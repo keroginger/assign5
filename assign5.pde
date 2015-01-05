@@ -12,7 +12,7 @@ final int GAME_LOSE    = 3;
 int status;     //Game Status
 int brickNum;   //Breaking brick number
 int pLife=3;
-
+boolean start=false;
 void setup(){
   
    status = GAME_START;
@@ -119,6 +119,7 @@ void ballDrop(){
    if(ball.y==480){
       pLife--;
       status = GAME_START;
+      start=false;
    }
    if(pLife==0){
       status = GAME_LOSE;
@@ -158,18 +159,30 @@ void reset() {
   brickMaker(105,40,41,10);
   pLife=3;
   brickNum=0;
+  start=false;
 }
-void mouseClicked(){
+/*void mouseClicked(){
      if(mouseButton==RIGHT){
          status = GAME_PLAYING;
      }
-}
+}*/
+void mouseClicked(){
+  if(mouseButton==RIGHT && start==false && status==GAME_START){
+    status = GAME_PLAYING;
+    start=true;
+    ball.xSpeed=random(-6,8);
+    ball.ySpeed=-6;
+    }
+  } 
 
 void keyPressed(){
     if(key == ENTER){
         switch(status) {  
            case GAME_START:
            status = GAME_PLAYING;
+           start=true;
+    ball.xSpeed=random(-4,7);
+    ball.ySpeed=-6;
            break;
            
            case GAME_WIN:
