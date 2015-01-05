@@ -116,7 +116,7 @@ void brickMaker(int x,int y,int spacing,int bInRow){
 }
 }
 void ballDrop(){
-   if(ball.y==480){
+   if(ball.y==460){
       pLife--;
       status = GAME_START;
    }
