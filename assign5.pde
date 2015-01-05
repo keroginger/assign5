@@ -162,13 +162,7 @@ void reset() {
 void mouseClicked(){
      if(mouseButton==RIGHT){
          status = GAME_PLAYING;
-        float angle = random(0, PI);
-        ball.xSpeed = 5*cos(angle);
-        ball.ySpeed = -5*sin(angle);
-        if(ball.y==460){
-      pLife--;
-      status = GAME_START;
-   }
+      
      }
 }
 
