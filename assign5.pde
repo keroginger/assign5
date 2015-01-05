@@ -171,7 +171,7 @@ void mouseClicked(){
     status = GAME_PLAYING;
     start=true;
     ball.xSpeed=random(-6,8);
-    ball.ySpeed=-6;
+    ball.ySpeed=random(-6,-18);
     }
   } 
 
